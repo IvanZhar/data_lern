@@ -47,7 +47,7 @@ class BTree:
             return None, np.inf
         qual_eval_vec = np.vectorize(qual_eval)
         qual_matrix = qual_eval_vec(uniq_feat)
-        best_qual_idx = np.argmin(qual_matrix)
+        best_qual_idx = int(np.argmin(qual_matrix))
         return uniq_feat[best_qual_idx] if qual_matrix[best_qual_idx] != np.inf else None, np.min(qual_matrix)
 
     def choose_split(self, response_array, features_array):
