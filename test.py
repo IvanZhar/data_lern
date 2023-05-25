@@ -1,4 +1,6 @@
 import numpy as np
 
-a = np.array([0])
-print(np.array([1,2]) in a)
+distance_matrix = np.full((3, 3), np.inf)
+distance_matrix[0, 0] = 1
+
+print(distance_matrix)
