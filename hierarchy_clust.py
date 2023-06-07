@@ -1,6 +1,7 @@
 import numpy as np
 from functools import lru_cache
-
+from sklearn.cluster import AgglomerativeClustering
+import timeit
 
 
 class Cluster:
@@ -40,9 +41,8 @@ class HierarchyClust:
     def get_distance(self, cluster_set):
         cluster_1, cluster_2 = cluster_set
         if cluster_1.is_leaf and cluster_2.is_leaf:
-            test = frozenset([cluster_1.coordinate, cluster_2.coordinate])
             return self.get_euclidean_distance(frozenset([cluster_1.coordinate, cluster_2.coordinate]))
-        elif not cluster_1.is_leaf and not cluster_2.is_leaf:
+        elif not cluster_1.is_leaf or not cluster_2.is_leaf:
             s_cluster = cluster_2
             w_cluster = cluster_1
             if cluster_1.index < cluster_2.index:
@@ -56,7 +56,7 @@ class HierarchyClust:
     def get_distance_matrix(self):
         current_clusters_idxs = self.clusters.keys()
         max_clustr_idx = max(current_clusters_idxs)
-        distance_matrix = np.full((max_clustr_idx, max_clustr_idx), np.inf)
+        distance_matrix = np.full((max_clustr_idx + 1, max_clustr_idx + 1), np.inf)
         for i in range(distance_matrix.shape[1]):
             for j in range(i + 1, distance_matrix.shape[1]):
                 if i not in current_clusters_idxs or j not in current_clusters_idxs:
@@ -65,7 +65,7 @@ class HierarchyClust:
                     distance_matrix[i, j] = self.get_distance(frozenset([self.clusters[i], self.clusters[j]]))
         return distance_matrix
 
-    def fit_predict(self, x):
+    def fit(self, x):
         assert x.shape[0] > self.n_clusters, 'Objects number exceed clusters number'
         self.x = x
         for i in range(x.shape[0]):
@@ -105,19 +105,16 @@ a = np.array([
     [1,   5]
 ])
 
-hc = HierarchyClust(2)
-print(hc.fit_predict(a))
+#hc = HierarchyClust(2)
+#hc.fit(a)
+mine = 'hc = HierarchyClust(2);hc.fit(a)'
 
+#sk = AgglomerativeClustering(n_clusters=2)
+#sk.fit(a)
+sks = 'sk = AgglomerativeClustering(n_clusters=2);sk.fit(a)'
 
+print('MINE time:', timeit.timeit(mine, globals=globals(), number=1000))
+print('SKLEARN time: ', timeit.timeit(mine, globals=globals(), number=1000))
 
-
-# hc = HierarchyClust(5)
-# hc.get_euclidean_clusters(a)
-# print(hc.clusters)
-
-# a = {frozenset({1, 2}): 9, frozenset({1, 4}): 0, frozenset({2, 3}): 5, frozenset({2, 7}): 5}
-# print(a.keys())
-#
-# print([a.get(key) for key in a.keys() if 1 in key])
 
 
