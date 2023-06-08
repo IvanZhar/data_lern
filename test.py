@@ -1,6 +1,15 @@
 import numpy as np
+from sys import getsizeof
 
-distance_matrix = np.full((3, 3), np.inf)
-distance_matrix[0, 0] = 1
 
-print(distance_matrix)
+# a = np.int8
+#
+#
+# print(getsizeof(a))
+#
+# b = frozenset((2, 5))
+
+a = (1, 2, 3)
+b = (5, 6, 7)
+
+print(a + b)
