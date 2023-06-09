@@ -1,15 +1,9 @@
-import numpy as np
-from sys import getsizeof
+import itertools
+import timeit
 
 
-# a = np.int8
-#
-#
-# print(getsizeof(a))
-#
-# b = frozenset((2, 5))
+class Test:
+    def __init__(self, numbers):
+        self.a, self.b = numbers
+        self.power = self.a * self.b
 
-a = (1, 2, 3)
-b = (5, 6, 7)
-
-print(a + b)

@@ -12,7 +12,6 @@ class Cluster:
         self.coordinate = coordinates
         self.n_points = n_points
         self.feature_indexes = feature_indexes
-        #self.clusters = coordinates
         self.child_1 = child_1
         self.child_2 = child_2
         self.is_leaf = is_leaf
@@ -57,14 +56,14 @@ class HierarchyClust:
 
     def get_best_link(self):
         total_clusters = list(self.clusters.keys())
-        best_link = np.array([np.nan, np.nan])
+        best_link = [np.nan, np.nan]
         best_dist = np.inf
         for i in range(len(total_clusters)):
             for j in range(i + 1, len(total_clusters)):
                 distance = self.get_distance(frozenset([self.clusters[total_clusters[i]], self.clusters[total_clusters[j]]]))
                 if distance < best_dist:
                     best_dist = distance
-                    best_link = np.array([total_clusters[i], total_clusters[j]])
+                    best_link[0], best_link[1] = [total_clusters[i], total_clusters[j]]
         return best_link
 
     def fit(self, x):
