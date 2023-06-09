@@ -11,11 +11,15 @@ class DynamicDistanceMatrix:
     def dataframe(self, cluster_dict):
         self.header = list(cluster_dict.keys())
         frame = {}
+        frame_min = [float('inf'), float('inf')]
         for i in range(len(self.header)):
             for j in range(i + 1, len(self.header)):
                 frame[frozenset([self.header[i], self.header[j]])] = Node(frozenset([cluster_dict[i], cluster_dict[j]]))
+                if frame[frozenset([self.header[i], self.header[j]])].value < frame_min[1]:
+                    frame_min[0] = frozenset([frame[frozenset([self.header[i], self.header[j]])].cluster_1,
+                                              frame[frozenset([self.header[i], self.header[j]])].cluster_2])
+                    frame_min[1] = frame[frozenset([self.header[i], self.header[j]])].value
         return frame
-
 
 
 class Node:

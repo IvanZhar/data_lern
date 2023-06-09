@@ -1,9 +1,4 @@
-import itertools
 import timeit
 
 
-class Test:
-    def __init__(self, numbers):
-        self.a, self.b = numbers
-        self.power = self.a * self.b
-
+print(timeit.timeit('if 1 > 2:pass', number=10**7))
