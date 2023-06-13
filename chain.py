@@ -2,7 +2,7 @@ import random
 import timeit
 
 
-seq = [i for i in range(1000)]
+seq = [i for i in range(3000)]
 random.Random(4).shuffle(seq)
 
 
@@ -37,11 +37,11 @@ class Chain:
                     else:
                         node.parent.parent = Node(val, child=node.parent)
         else:
-            if not node.child:
+            if node.child:
+                node.child = Node(val, child=node.child, parent=node)
+            else:
                 self.root = Node(val, parent=node)
                 node.child = self.root
-            else:
-
 
     def print_chain(self):
         print('my_sort[', end='')
@@ -80,5 +80,10 @@ print('mine chain sorting time: ', timeit.timeit(mine, globals=globals(), number
 # chain.add(5)
 # chain.add(3)
 # chain.add(8)
+# chain.add(12)
+# chain.add(1)
+# chain.add(6)
 # chain.add(7)
+# chain.add(0)
+# chain.add(15)
 # chain.print_chain()
